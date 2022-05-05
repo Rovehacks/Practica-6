@@ -95,11 +95,23 @@ void printData(Node<int>* f)
     }
 }
 
-int deleteData(Node<int>* f, int pos)
+void deleteData(Node<int>* f, int pos)
 {
     Node<int>* aux = f;
-    for (int i = 0; i < pos - 1; i++)
+    Node<int>* prev = new Node<int>();
+    while (pos > 0 && aux->next != nullptr)
+    {
+        if (pos - 1 == 0)
+        {
+            prev = aux;
+        }
         aux = aux->next;
+        pos--;
+    }
+    prev->next = aux->next;
+    aux->next = nullptr;
+    delete aux;
+
 }
 
 void deleteList(Node<int>* f)
@@ -131,10 +143,14 @@ int main()
             cin >> data;
             cout << "Digite la posicion en la que deseas insertarlo" << endl;
             cin >> pos;
-            if (getLength(firstNode) <= pos)
+            if (getLength(firstNode) < pos)
                 cout << "Posicion invalida" << endl;
             else
+            {
+                insertData(firstNode, data, pos);
                 cout << "Se inserto el dato correctamente" << endl;
+            }
+                
 
         }break;
         case 3:
